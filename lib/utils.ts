@@ -42,6 +42,6 @@ export function constructMetadata({
       creator: '@lakshaykhokhar2003',
     },
     icons,
-    metadataBase: new URL("https://e-commerce-website-bice-six.vercel.app//")
+    metadataBase: new URL("https://e-commerce-website-seven-eta.vercel.app")
   }
 }

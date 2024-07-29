@@ -3,6 +3,8 @@ const nextConfig = {
     images: {
         domains: ['utfs.io'],
     },
+    crossOrigin: ['anonymous', 'use-credentials'],
+
 
     async headers() {
         return [{
