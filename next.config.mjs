@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    images: {
+        domains: ['utfs.io'],
+    },
 
     async headers() {
         return [{
@@ -12,9 +15,7 @@ const nextConfig = {
                     value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
                 },]
         }]
-    }, images: {
-        domains: ['utfs.io'],
-    },
+    }
 }
 
-module.exports = nextConfig
+export default nextConfig
