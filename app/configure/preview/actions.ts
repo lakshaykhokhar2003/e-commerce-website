@@ -1,10 +1,10 @@
 'use server'
 
-import { BASE_PRICE, PRODUCT_PRICES } from '@/config/products'
-import { db } from '@/db'
-import { stripe } from '@/lib/stripe'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { Order } from '@prisma/client'
+import {BASE_PRICE, PRODUCT_PRICES} from '@/config/products'
+import {db} from '@/db'
+import {stripe} from '@/lib/stripe'
+import {getKindeServerSession} from '@kinde-oss/kinde-auth-nextjs/server'
+import {Order} from '@prisma/client'
 
 export const createCheckoutSession = async ({
                                                 configId,
@@ -12,21 +12,21 @@ export const createCheckoutSession = async ({
     configId: string
 }) => {
     const configuration = await db.configuration.findUnique({
-        where: { id: configId },
+        where: {id: configId},
     })
 
     if (!configuration) {
         throw new Error('No such configuration found')
     }
 
-    const { getUser } = getKindeServerSession()
+    const {getUser} = getKindeServerSession()
     const user = await getUser()
 
     if (!user) {
         throw new Error('You need to be logged in')
     }
 
-    const { finish, material } = configuration
+    const {finish, material} = configuration
 
     let price = BASE_PRICE
     if (finish === 'textured') price += PRODUCT_PRICES.finish.textured
@@ -41,7 +41,6 @@ export const createCheckoutSession = async ({
             configurationId: configuration.id,
         },
     })
-
 
     if (existingOrder) {
         order = existingOrder
@@ -69,13 +68,13 @@ export const createCheckoutSession = async ({
         cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
         payment_method_types: ['card'],
         mode: 'payment',
-        shipping_address_collection: { allowed_countries: ['IN', 'US'] },
+        shipping_address_collection: {allowed_countries: ['IN', 'US']},
         metadata: {
             userId: user.id,
             orderId: order.id,
         },
-        line_items: [{ price: product.default_price as string, quantity: 1 }],
+        line_items: [{price: product.default_price as string, quantity: 1}],
     })
 
-    return { url: stripeSession.url }
+    return {url: stripeSession.url}
 }
