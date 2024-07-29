@@ -1,12 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['utfs.io'],
-    },
-    crossOrigin: ['anonymous', 'use-credentials'],
-
-
-    async headers() {
+    crossOrigin: 'anonymous', async headers() {
         return [{
             // matching all API routes
             source: "/api/:path*", headers: [{key: "Access-Control-Allow-Credentials", value: "true"}, {
@@ -17,7 +11,10 @@ const nextConfig = {
                     value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
                 },]
         }]
+    }, images: {
+        domains: ['utfs.io'],
     }
+
 }
 
 export default nextConfig

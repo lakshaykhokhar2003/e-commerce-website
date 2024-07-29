@@ -65,7 +65,7 @@ const Page = () => {
                         'image/jpg': ['.jpg'],
                     }}
                     onDragEnter={() => setIsDragOver(true)}
-                    onDragLeave={() =>  (false)}>
+                    onDragLeave={() =>  false}>
                     {({ getRootProps, getInputProps }) => (
                         <div
                             className='h-full w-full flex-1 flex flex-col items-center justify-center'
@@ -76,7 +76,7 @@ const Page = () => {
                             ) : isUploading || isPending ? (
                                 <Loader2 className='animate-spin h-6 w-6 text-zinc-500 mb-2' />
                             ) : (
-                                <Image className='h-6 w-6 text-zinc-500 mb-2' />
+                                <Image className='h-6 w-6 text-zinc-500 mb-2' alt="img" />
                             )}
                             <div className='flex flex-col justify-center mb-2 text-sm text-zinc-700'>
                                 {isUploading ? (
