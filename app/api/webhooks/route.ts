@@ -3,10 +3,10 @@ import { stripe } from '@/lib/stripe'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { Resend } from 'resend'
-import OrderReceivedEmail from '@/components/emails/OrderReceivedEmail'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+// import { Resend } from 'resend'
+// import OrderReceivedEmail from '@/components/emails/OrderReceivedEmail'
+//
+// const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
     try {
@@ -96,8 +96,7 @@ export async function POST(req: Request) {
         console.error(err)
 
         return NextResponse.json(
-            { message: 'Something went wrong', ok: false },
-            { status: 500 }
+            { message: 'Something went wrong', ok: false,status: 500}
         )
     }
 }
