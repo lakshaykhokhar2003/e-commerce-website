@@ -1,7 +1,7 @@
-import { db } from '@/db'
-import { stripe } from '@/lib/stripe'
-import { headers } from 'next/headers'
-import { NextResponse } from 'next/server'
+import {db} from '@/db'
+import {stripe} from '@/lib/stripe'
+import {headers} from 'next/headers'
+import {NextResponse} from 'next/server'
 import Stripe from 'stripe'
 // import { Resend } from 'resend'
 // import OrderReceivedEmail from '@/components/emails/OrderReceivedEmail'
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         const signature = headers().get('stripe-signature')
 
         if (!signature) {
-            return new Response('Invalid signature', { status: 400 })
+            return new Response('Invalid signature', {status: 400})
         }
 
         const event = stripe.webhooks.constructEvent(
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
             const session = event.data.object as Stripe.Checkout.Session
 
-            const { userId, orderId } = session.metadata || {
+            const {userId, orderId} = session.metadata || {
                 userId: null,
                 orderId: null,
             }
@@ -71,32 +71,33 @@ export async function POST(req: Request) {
                 },
             })
 
-        //     await resend.emails.send({
-        //         from: 'CaseCobra <hello@joshtriedcoding.com>',
-        //         to: [event.data.object.customer_details.email],
-        //         subject: 'Thanks for your order!',
-        //         react: OrderReceivedEmail({
-        //             orderId,
-        //             orderDate: updatedOrder.createdAt.toLocaleDateString(),
-        //             // @ts-ignore
-        //             shippingAddress: {
-        //                 name: session.customer_details!.name!,
-        //                 city: shippingAddress!.city!,
-        //                 country: shippingAddress!.country!,
-        //                 postalCode: shippingAddress!.postal_code!,
-        //                 street: shippingAddress!.line1!,
-        //                 state: shippingAddress!.state,
-        //             },
-        //         }),
-        //     })
+            //     await resend.emails.send({
+            //         from: 'CaseCobra <hello@joshtriedcoding.com>',
+            //         to: [event.data.object.customer_details.email],
+            //         subject: 'Thanks for your order!',
+            //         react: OrderReceivedEmail({
+            //             orderId,
+            //             orderDate: updatedOrder.createdAt.toLocaleDateString(),
+            //             // @ts-ignore
+            //             shippingAddress: {
+            //                 name: session.customer_details!.name!,
+            //                 city: shippingAddress!.city!,
+            //                 country: shippingAddress!.country!,
+            //                 postalCode: shippingAddress!.postal_code!,
+            //                 street: shippingAddress!.line1!,
+            //                 state: shippingAddress!.state,
+            //             },
+            //         }),
+            //     })
         }
 
-        return NextResponse.json({ result: event, ok: true })
+        return NextResponse.json({result: event, ok: true})
     } catch (err) {
         console.error(err)
 
         return NextResponse.json(
-            { message: 'Something went wrong', ok: false,status: 500}
+            {message: 'Something went wrong', ok: false},
+            {status: 500}
         )
     }
 }
